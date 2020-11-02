@@ -22,7 +22,7 @@
     "@u-iris/iris-common-test-utils": "^3.0.3-0",
     "@u-iris/iris-front-private": "0.0.6-0",
     "@u-iris/iris-front-ui": "^0.2.11-0",
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "core-js": "^2.6.5",
     "iris-common": "^1.0.4-0",
     "lodash": "^4.17.11",
