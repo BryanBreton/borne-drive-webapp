@@ -10,46 +10,46 @@
         <v-col class=".col-md-6 justify-center">
           <v-row>
             <v-col>
-              <v-btn class="bouton" @click="clique('1')">1</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('1')">1</v-btn>
             </v-col>
             <v-col>
-              <v-btn class="bouton" @click="clique('2')">2</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('2')">2</v-btn>
             </v-col>
             <v-col>
-              <v-btn class="bouton" @click="clique('3')">3</v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-btn class="bouton" @click="clique('4')">4</v-btn>
-            </v-col>
-            <v-col>
-              <v-btn class="bouton" @click="clique('5')">5</v-btn>
-            </v-col>
-            <v-col>
-              <v-btn class="bouton" @click="clique('6')">6</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('3')">3</v-btn>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-btn class="bouton" @click="clique('7')">7</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('4')">4</v-btn>
             </v-col>
             <v-col>
-              <v-btn class="bouton" @click="clique('8')">8</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('5')">5</v-btn>
             </v-col>
             <v-col>
-              <v-btn class="bouton" @click="clique('9')">9</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('6')">6</v-btn>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-btn class="bouton" @click="clique('0')">0</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('7')">7</v-btn>
             </v-col>
             <v-col>
-              <v-btn class="bouton orange" @click="effacer()">R</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('8')">8</v-btn>
             </v-col>
             <v-col>
-              <v-btn class="bouton green" @click="valider()">V</v-btn>
+              <v-btn x-large class="bouton ma-0" @click="clique('9')">9</v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-btn x-large class="bouton ma-0" @click="clique('0')">0</v-btn>
+            </v-col>
+            <v-col>
+              <v-btn x-large class="bouton orange ma-0" @click="effacer()">R</v-btn>
+            </v-col>
+            <v-col>
+              <v-btn x-large class="bouton green ma-0" @click="valider()">V</v-btn>
             </v-col>
           </v-row>
         </v-col>
@@ -116,7 +116,9 @@ export default {
   background-color: #0077b2 !important;
 }
 .bouton{
-  height: 100% !important;
+  width: 100% !important;
+  font-size: 300% !important;
+
 }
 .numeroCarte{
   background-color: #fff !important;
