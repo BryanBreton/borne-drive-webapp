@@ -1,6 +1,36 @@
 <template>
   <div class="about page d-flex align-center pa-4 mx-auto" style="height: 100%">
     <v-container>
+      <div class="image">
+        <img :src="image.src" alt="">
+      </div>
+        <v-dialog
+        v-model="visible"
+        width="500"
+      >
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Nous allons venir a votre aide
+          </v-card-title>
+
+          <v-card-text>
+            Veuillez patientez, quelqu'un va venir vous aider       
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              text
+              @click="visible = false"
+            >
+              Ok
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <h1 class=".col-md-12 d-flex justify-center">Scannez votre carte ou entrez votre numero de carte</h1>
       <div class="numeroCarte">
         {{ numeroCarte }}
@@ -58,7 +88,21 @@
           <img src="../assets/scan.png" width="100%" />
         </v-col>
       </v-row>
-
+      <v-row>
+        <v-col class=".col-md-6">
+          
+        </v-col>
+        <v-col class=".col-md-6">
+          <v-row @click="help()">
+            <img src="../assets/aide.png" alt="aide">
+          </v-row>
+          <v-row>
+            Besoin d'aide
+          </v-row>
+            
+            
+        </v-col>
+      </v-row>
       <div class="error">
         {{ message }}
       </div>
@@ -73,15 +117,19 @@ export default {
     return {
       numeroCarte: "",
       message: "",
+      image: {},
+      visible: false
     }
   },
   created: {
-    setFocus() {
-      this.$refs.numCarte.$el.focus()
-    },
+    
   },
   mounted() {
-
+    console.log("yayayay");
+    axios.get("http://u3antu773.groupement.systeme-u.fr/SmartNews-FidAu/1mLHnbnM9c5nWYDR68EgaT8nTLt_hNwpr/accueil.json").then(res => {
+      console.log(res.data[0]);
+      this.image = { src: process.env.VUE_APP_PREFIXE_IMAGE + res.data[0].src, delai: res.data[0].delai }
+    })
     const self = this; 
 
     window.addEventListener('keyup', function(ev) {
@@ -108,6 +156,11 @@ export default {
       this.$store.dispatch("cartesStore/currentState", carte)
       this.$router.push("Waiting")
     },
+    help(id) {
+      // axios.post() 
+      console.log("appel api");
+      axios.get("http://localhost:8080/bornes/help/1").then(this.visible = true)
+    }
   },
 }
 </script>
@@ -123,5 +176,14 @@ export default {
 .numeroCarte{
   background-color: #fff !important;
   width: 25% !important;
+}
+.help{
+  background-image: url('../assets/aide.png');
+}
+.image{
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  max-width: 100% !important;
 }
 </style>
