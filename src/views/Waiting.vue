@@ -4,7 +4,6 @@
       <img :src="imgAffichee" class="image"/>
       <div class="clavier d-flex align-center pa-4 mx-auto">
         <h1>{{ message }}</h1>
-        <v-btn @click="test()">test actu</v-btn>
       </div>
     </v-container>
   </div>
@@ -17,17 +16,17 @@ export default {
   computed: {
     ...mapState("cartesStore", ["currentState"]),
   },
-  mounted(){
-    console.log(process.env.VUE_APP_PREFIXE_IMAGE);
+  mounted(){console.log(process.env.VUE_APP_PREFIXE_IMAGE);
     this.message = this.currentState
     axios.get('http://u3antu773.groupement.systeme-u.fr/SmartNews-FidAu/1mLHnbnM9c5nWYDR68EgaT8nTLt_hNwpr/borneDrive.json').then(res => {
       this.imgs = res.data
     })
     this.nextImage()
+    this.test()
   },
   methods: {
     test(){
-      axios.get("http://localhost:8080/commandes/" + this.numeroCarte).then((resp) => {
+      axios.get("http://localhost:8080/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         console.log("jsuis la")
         this.message = resp.data.message
         setTimeout(() => {
@@ -69,7 +68,7 @@ export default {
         ],
       imgDefaut: process.env.VUE_APP_PREFIXE_IMAGE + '/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53',
       imgAffichee: process.env.VUE_APP_PREFIXE_IMAGE + '/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53',
-      numeroCarte: 123456789
+      numeroCarte: localStorage.numeroCarte
     }
   },
 }

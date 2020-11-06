@@ -143,8 +143,8 @@ export default {
       this.numeroCarte = this.numeroCarte + numero
     },
     valider() {
-      console.log("http://localhost:8080/commandes/" + this.numeroCarte)
-      axios.get("http://localhost:8080/commandes/" + this.numeroCarte).then((resp) => {
+      console.log("http://localhost:8080/commandes/" + this.numeroCarte + "/borne/1")
+      axios.get("http://localhost:8080/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         this.clientValider(resp.data.message)
       })
     },
@@ -154,6 +154,7 @@ export default {
     },
     clientValider(carte) {
       this.$store.dispatch("cartesStore/currentState", carte)
+      localStorage.numeroCarte = this.numeroCarte
       this.$router.push("Waiting")
     },
     help(id) {
