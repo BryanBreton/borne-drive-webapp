@@ -1,7 +1,7 @@
 <template>
   <div class="page" @click="start()" style="height:100%">
     <img alt="Vue logo" width="100%" height="70%" src="../assets/accueil.png">
-    
+
   </div>
 </template>
 
@@ -22,5 +22,8 @@ export default {
 <style>
 .page{
   background-color: #0077b2 !important;
+}
+body::-webkit-scrollbar {
+  display: none;
 }
 </style>

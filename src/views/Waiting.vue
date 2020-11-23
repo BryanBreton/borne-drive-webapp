@@ -1,12 +1,13 @@
 <template>
+<v-container>
   <div class="about d-flex align-center pa-4 mx-auto" style="height: 100%">
-    <v-container>
       <img :src="imgAffichee" class="image"/>
-      <div class="clavier d-flex align-center pa-4 mx-auto">
-        <h1>{{ message }}</h1>
+      <div class="message d-flex align-center pa-4 mx-auto">
+        <h1 align=center>{{ message }}</h1>
       </div>
-    </v-container>
   </div>
+
+  </v-container>
 </template>
 
 <script>
@@ -20,13 +21,13 @@ export default {
     this.message = this.currentState
     axios.get('http://u3antu773.groupement.systeme-u.fr/SmartNews-FidAu/1mLHnbnM9c5nWYDR68EgaT8nTLt_hNwpr/borneDrive.json').then(res => {
       this.imgs = res.data
+      this.nextImage()
     })
-    this.nextImage()
     this.test()
   },
   methods: {
     test(){
-      axios.get("http://localhost:8080/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+      axios.get("http://" + window.location.hostname + ":8080/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         console.log("jsuis la")
         this.message = resp.data.message
         setTimeout(() => {
@@ -56,6 +57,7 @@ export default {
         setTimeout(this.nextImage, 30000)
       }
     },
+
   },
   data() {
     return {
@@ -75,7 +77,8 @@ export default {
 </script>
 <style>
 .about {
-  background-color: #0077b2;
+    color: #007d8f;
+    align: center;
 }
 .image{
   width: 100%;
@@ -83,5 +86,22 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+}
+.message {
+ font-family:    Vollkorn, sans-serif;
+ font-size:      20px;
+ font-weight:    bold;
+  position: absolute;
+   top: 250px; left: 30px; width: 960px;
+
+}
+.aide {
+  border: none !important;
+  position: absolute;
+  top: 660px;
+  left: 940px;
+}
+body::-webkit-scrollbar {
+  display: none;
 }
 </style>

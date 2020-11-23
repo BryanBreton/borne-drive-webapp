@@ -14,7 +14,7 @@
           </v-card-title>
 
           <v-card-text>
-            Veuillez patientez, quelqu'un va venir vous aider       
+            Veuillez patientez, quelqu'un va venir vous aider
           </v-card-text>
 
           <v-divider></v-divider>
@@ -32,10 +32,10 @@
         </v-card>
       </v-dialog>
       <h1 class=".col-md-12 d-flex justify-center">Scannez votre carte ou entrez votre numero de carte</h1>
-      <div class="numeroCarte">
+      <div class="numeroCarte justify-center">
         {{ numeroCarte }}
       </div>
-      
+
       <v-row>
         <v-col class=".col-md-6 justify-center">
           <v-row>
@@ -90,7 +90,7 @@
       </v-row>
       <v-row>
         <v-col class=".col-md-6">
-          
+
         </v-col>
         <v-col class=".col-md-6">
           <v-row @click="help()">
@@ -99,8 +99,8 @@
           <v-row>
             Besoin d'aide
           </v-row>
-            
-            
+
+
         </v-col>
       </v-row>
       <div class="error">
@@ -122,7 +122,7 @@ export default {
     }
   },
   created: {
-    
+
   },
   mounted() {
     console.log("yayayay");
@@ -130,7 +130,7 @@ export default {
       console.log(res.data[0]);
       this.image = { src: process.env.VUE_APP_PREFIXE_IMAGE + res.data[0].src, delai: res.data[0].delai }
     })
-    const self = this; 
+    const self = this;
 
     window.addEventListener('keyup', function(ev) {
         console.log(typeof(ev.key));
@@ -158,7 +158,7 @@ export default {
       this.$router.push("Waiting")
     },
     help(id) {
-      // axios.post() 
+      // axios.post()
       console.log("appel api");
       axios.get("http://localhost:8080/bornes/help/1").then(this.visible = true)
     }
@@ -176,7 +176,9 @@ export default {
 }
 .numeroCarte{
   background-color: #fff !important;
-  width: 25% !important;
+  width: 20% !important;
+  height:30px;
+  font-size: 15px;
 }
 .help{
   background-image: url('../assets/aide.png');
