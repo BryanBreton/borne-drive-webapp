@@ -198,8 +198,8 @@ export default {
       this.numeroCarte = this.numeroCarte + numero
     },
     valider() {
-      console.log("http://" + window.location.hostname + ":3000/commandes/" + this.numeroCarte + "/borne/1")
-      axios.get("http://" + window.location.hostname + ":3000/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+      console.log("http://" + window.location.hostname + ":3001/commandes/" + this.numeroCarte + "/borne/1")
+      axios.get("http://" + window.location.hostname + ":3001/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         this.clientValider(resp.data.message)
       })
     },
@@ -215,7 +215,7 @@ export default {
     help(id) {
       // axios.post()
       console.log("appel api");
-      axios.get("http://" + window.location.hostname + ":8080/bornes/help/1").then(this.visible = true)
+      axios.get("http://" + window.location.hostname + ":3001/bornes/help/1").then(this.visible = true)
     }
   },
 }
