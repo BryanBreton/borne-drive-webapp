@@ -3,7 +3,35 @@
   <div class="about d-flex align-center pa-4 mx-auto" style="height: 100%">
       <img :src="imgAffichee" class="image"/>
       <div class="message d-flex align-center pa-4 mx-auto">
-        <h1 align=center>{{ message }}</h1>
+
+        <div class="enAttente" v-if="message.statut === 'En Attente'">
+          {{message.client.civilite}} {{message.client.nom}} <br>
+          Votre commande d'un montant de {{message.montant}} n'est pas encore prise en charge, veuillez patientez
+        </div>
+
+        <div v-if="!message.statut" class="existePas">
+          Vous n'avez pas de commande enregistrée
+        </div>
+
+        <div class="prete align-center" v-if="message.statut === 'Prete'">
+          <v-row>
+            <v-col>
+              {{message.client.civilite}} {{message.client.nom}} <br>
+          Votre commande d'un montant de {{message.montant}} est prete.
+            </v-col>
+            
+          </v-row>
+          <v-row>
+            <v-col>
+            <div style="color: red">
+              <img :src="imagePreparateur">
+              {{message.preparateur.prenom }} va vous servir
+            </div>
+            </v-col>
+          </v-row>
+          
+          
+        </div>
       </div>
   </div>
 
@@ -27,9 +55,11 @@ export default {
   },
   methods: {
     test(){
-      axios.get("http://" + window.location.hostname + ":8080/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+      axios.get("http://" + window.location.hostname + ":3000/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         console.log("jsuis la")
-        this.message = resp.data.message
+        console.log(resp.data);
+        this.message = resp.data
+        resp.data.preparateur ? this.imagePreparateur = "http://u3antu773.groupement.systeme-u.fr//SmartNews-FidAu/collaborateurs/" + resp.data.preparateur.photo : this.imagePreparateur = ''
         setTimeout(() => {
           this.test()
         }, 3000);
@@ -70,7 +100,8 @@ export default {
         ],
       imgDefaut: process.env.VUE_APP_PREFIXE_IMAGE + '/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53',
       imgAffichee: process.env.VUE_APP_PREFIXE_IMAGE + '/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53',
-      numeroCarte: localStorage.numeroCarte
+      numeroCarte: localStorage.numeroCarte,
+      imagePreparateur: ''
     }
   },
 }

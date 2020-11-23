@@ -198,8 +198,8 @@ export default {
       this.numeroCarte = this.numeroCarte + numero
     },
     valider() {
-      console.log("http://" + window.location.hostname + ":8080/commandes/" + this.numeroCarte + "/borne/1")
-      axios.get("http://" + window.location.hostname + ":8080/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+      console.log("http://" + window.location.hostname + ":3000/commandes/" + this.numeroCarte + "/borne/1")
+      axios.get("http://" + window.location.hostname + ":3000/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         this.clientValider(resp.data.message)
       })
     },
