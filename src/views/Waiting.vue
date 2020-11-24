@@ -68,6 +68,9 @@ export default {
         console.log("jsuis la")
         console.log(resp.data);
         this.message = resp.data
+        if(resp.data.statut === "Finie"){
+          this.$router.push('test')
+        }
         resp.data.preparateur ? this.imagePreparateur = process.env.VUE_APP_PREFIXE_IMAGE_PREPARATEUR + resp.data.preparateur.photo : this.imagePreparateur = ''
         setTimeout(() => {
           this.test()
