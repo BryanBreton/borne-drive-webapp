@@ -126,7 +126,7 @@ export default {
   },
   mounted() {
     console.log("yayayay");
-    axios.get("http://u3antu773.groupement.systeme-u.fr/SmartNews-FidAu/1mLHnbnM9c5nWYDR68EgaT8nTLt_hNwpr/accueil.json").then(res => {
+    axios.get(processs.env.VUE_APP_PREFIXE_IMAGE + "/accueil.json").then(res => {
       console.log(res.data[0]);
       this.image = { src: process.env.VUE_APP_PREFIXE_IMAGE + res.data[0].src, delai: res.data[0].delai }
     })

@@ -1,12 +1,12 @@
 <template>
 <v-container>
-  <div class="about d-flex align-center pa-4 mx-auto" style="height: 100%">
+  <div class="about align-center" style="height: 100%">
       <img :src="imgAffichee" class="image"/>
       <div class="message d-flex align-center pa-4 mx-auto">
 
         <div class="enAttente" v-if="message.statut === 'En Attente'">
           {{message.client.civilite}} {{message.client.nom}} <br>
-          Votre commande d'un montant de {{message.montant}} n'est pas encore prise en charge, veuillez patientez
+          Votre commande d'un montant de {{message.montant}} est prête, veuillez patientez un collaborateur va venir vous servir
         </div>
 
         <div v-if="!message.statut" class="existePas">
@@ -47,7 +47,7 @@ export default {
   },
   mounted(){console.log(process.env.VUE_APP_PREFIXE_IMAGE);
     this.message = this.currentState
-    axios.get('http://u3antu773.groupement.systeme-u.fr/SmartNews-FidAu/1mLHnbnM9c5nWYDR68EgaT8nTLt_hNwpr/borneDrive.json').then(res => {
+    axios.get(process.env.VUE_APP_PREFIXE_IMAGE +'/borneDrive.json').then(res => {
       this.imgs = res.data
       this.nextImage()
     })
@@ -55,11 +55,11 @@ export default {
   },
   methods: {
     test(){
-      axios.get("http://" + window.location.hostname + ":3000/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+      axios.get("http://" + window.location.hostname + ":3001/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         console.log("jsuis la")
         console.log(resp.data);
         this.message = resp.data
-        resp.data.preparateur ? this.imagePreparateur = "http://u3antu773.groupement.systeme-u.fr//SmartNews-FidAu/collaborateurs/" + resp.data.preparateur.photo : this.imagePreparateur = ''
+        resp.data.preparateur ? this.imagePreparateur = process.env.VUE_APP_PREFIXE_IMAGE_PREPARATEUR + resp.data.preparateur.photo : this.imagePreparateur = ''
         setTimeout(() => {
           this.test()
         }, 3000);
@@ -109,7 +109,6 @@ export default {
 <style>
 .about {
     color: #007d8f;
-    align: center;
 }
 .image{
   width: 100%;
@@ -119,8 +118,10 @@ export default {
   left: 0;
 }
 .message {
+  text-align: center !important;
  font-family:    Vollkorn, sans-serif;
- font-size:      20px;
+ font-size: 250% !important;
+
  font-weight:    bold;
   position: absolute;
    top: 250px; left: 30px; width: 960px;
