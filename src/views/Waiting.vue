@@ -1,4 +1,5 @@
 <template>
+<div>
 <v-container>
   <div class="about align-center" style="height: 100%">
       <img :src="imgAffichee" class="image"/>
@@ -23,7 +24,7 @@
           </v-row>
           <v-row>
             <v-col>
-            <div style="color: red">
+            <div>
               <img :src="imagePreparateur">
               {{message.preparateur.prenom }} va vous servir
             </div>
@@ -33,9 +34,14 @@
           
         </div>
       </div>
+        
   </div>
-
+  
   </v-container>
+  <div class="lisere" @click="retour()">
+    <img src="../assets/lisere_bas.jpg">
+  </div>
+  </div>
 </template>
 
 <script>
@@ -54,6 +60,9 @@ export default {
     this.test()
   },
   methods: {
+    retour(){
+      this.$router.push('test')
+    },
     test(){
       axios.get("http://" + window.location.hostname + ":3001/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
         console.log("jsuis la")
@@ -107,6 +116,11 @@ export default {
 }
 </script>
 <style>
+.lisere{
+  position: absolute !important;
+  bottom: 0% !important;
+  left: 0% !important; 
+}
 .about {
     color: #007d8f;
 }
@@ -118,13 +132,11 @@ export default {
   left: 0;
 }
 .message {
-  text-align: center !important;
- font-family:    Vollkorn, sans-serif;
- font-size: 250% !important;
-
- font-weight:    bold;
+  font-family: Didot, serif !important;
+  font-size: 250% !important;
+  font-weight: bold;
   position: absolute;
-   top: 250px; left: 30px; width: 960px;
+  top: 250px; left: 30px; width: 960px;
 
 }
 .aide {
