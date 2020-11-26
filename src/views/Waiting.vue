@@ -1,46 +1,47 @@
 <template>
-<div>
-<v-container>
-  <div class="about align-center" style="height: 100%">
-      <img :src="imgAffichee" class="image"/>
-      <div class="message d-flex align-center pa-4 mx-auto">
+  <div>
+    <v-container>
+      <div class="about text-center" style="height: 100%">
+        <img :src="imgAffichee" class="image" />
+        <div class="message text-center pa-4 mx-auto">
+          <div class="enAttente" v-if="message.statut === 'En Attente'">
+            Bonjour {{ message.client.civilite }} {{ message.client.nom }} <br />
+            Votre commande d'un montant de {{ message.montant }} est prête, veuillez patientez un collaborateur va venir vous servir
+          </div>
 
-        <div class="enAttente" v-if="message.statut === 'En Attente'">
-          {{message.client.civilite}} {{message.client.nom}} <br>
-          Votre commande d'un montant de {{message.montant}} est prête, veuillez patientez un collaborateur va venir vous servir
-        </div>
+          <div v-if="!message.statut" class="existePas text-center">
+            <v-row>
+              <v-col> Vous n'avez pas de commande enregistrée </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-btn block @click="retour()" class="boutonRetour">retour</v-btn>
+              </v-col>
+            </v-row>
+          </div>
 
-        <div v-if="!message.statut" class="existePas">
-          Vous n'avez pas de commande enregistrée
-        </div>
-
-        <div class="prete align-center" v-if="message.statut === 'Prete'">
-          <v-row>
-            <v-col>
-              {{message.client.civilite}} {{message.client.nom}} <br>
-          Votre commande d'un montant de {{message.montant}} est prete.
-            </v-col>
-            
-          </v-row>
-          <v-row>
-            <v-col>
-            <div>
-              <img :src="imagePreparateur">
-              {{message.preparateur.prenom }} va vous servir
-            </div>
-            </v-col>
-          </v-row>
-          
-          
+          <div class="prete text-center" v-if="message.statut === 'Prete'">
+            <v-row>
+              <v-col>
+                Bonjour {{ message.client.civilite }} {{ message.client.nom }} <br />
+                Votre commande d'un montant de {{ message.montant }} est prete.
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <div>
+                  <img :src="imagePreparateur" />
+                  {{ message.preparateur.prenom }} va vous servir
+                </div>
+              </v-col>
+            </v-row>
+          </div>
         </div>
       </div>
-        
-  </div>
-  
-  </v-container>
-  <div class="lisere" @click="retour()">
-    <img src="../assets/lisere_bas.jpg">
-  </div>
+    </v-container>
+    <div class="lisere" @click="retour()">
+      <img src="../assets/lisere_bas.jpg" />
+    </div>
   </div>
 </template>
 
@@ -49,32 +50,33 @@ import { mapState } from "vuex"
 import axios from "axios"
 export default {
   computed: {
-    ...mapState("cartesStore", ["currentState"]),
+    ...mapState("cartesStore", ["currentState"])
   },
-  mounted(){console.log(process.env.VUE_APP_PREFIXE_IMAGE);
+  mounted() {
+    console.log(process.env.VUE_APP_PREFIXE_IMAGE)
     this.message = this.currentState
-    axios.get(process.env.VUE_APP_PREFIXE_IMAGE +'/borneDrive.json').then(res => {
+    axios.get(process.env.VUE_APP_PREFIXE_IMAGE + "/borneDrive.json").then(res => {
       this.imgs = res.data
       this.nextImage()
     })
     this.test()
   },
   methods: {
-    retour(){
-      this.$router.push('test')
+    retour() {
+      this.$router.push("test")
     },
-    test(){
-      axios.get("http://" + window.location.hostname + ":3001/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+    test() {
+      axios.get("http://" + window.location.hostname + ":3001/commandes/" + this.numeroCarte + "/borne/" + localStorage.idBorne).then(resp => {
         console.log("jsuis la")
-        console.log(resp.data);
+        console.log(resp.data)
         this.message = resp.data
-        if(resp.data.statut === "Finie"){
-          this.$router.push('test')
+        if (resp.data.statut === "Finie") {
+          this.$router.push("test")
         }
-        resp.data.preparateur ? this.imagePreparateur = process.env.VUE_APP_PREFIXE_IMAGE_PREPARATEUR + resp.data.preparateur.photo : this.imagePreparateur = ''
+        resp.data.preparateur ? (this.imagePreparateur = process.env.VUE_APP_PREFIXE_IMAGE_PREPARATEUR + resp.data.preparateur.photo) : (this.imagePreparateur = "")
         setTimeout(() => {
           this.test()
-        }, 3000);
+        }, 3000)
       })
     },
     nextImage() {
@@ -98,36 +100,31 @@ export default {
         this.imgAffichee = this.imgDefaut
         setTimeout(this.nextImage, 30000)
       }
-    },
-
+    }
   },
   data() {
     return {
       message: "",
       indeximage: 0,
-      imgs: [
-        "/img/accueil.24d282dd.png",
-        "/img/logo.82b9c7a5.png",
-        "/img/scan.2052df9d.png",
-        ],
-      imgDefaut: process.env.VUE_APP_PREFIXE_IMAGE + '/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53',
-      imgAffichee: process.env.VUE_APP_PREFIXE_IMAGE + '/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53',
+      imgs: ["/img/accueil.24d282dd.png", "/img/logo.82b9c7a5.png", "/img/scan.2052df9d.png"],
+      imgDefaut: process.env.VUE_APP_PREFIXE_IMAGE + "/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53",
+      imgAffichee: process.env.VUE_APP_PREFIXE_IMAGE + "/1U-rh5VycJ7X0gFteMn_59GoVXBipKSif4yyxLY0yChQ-1.png?2020-10-30T16:44:53",
       numeroCarte: localStorage.numeroCarte,
-      imagePreparateur: ''
+      imagePreparateur: ""
     }
-  },
+  }
 }
 </script>
 <style>
-.lisere{
+.lisere {
   position: absolute !important;
-  bottom: 0% !important;
-  left: 0% !important; 
+  bottom: -3% !important;
+  left: 0% !important;
 }
 .about {
-    color: #007d8f;
+  color: #007d8f;
 }
-.image{
+.image {
   width: 100%;
   height: 25% !important;
   position: absolute;
@@ -139,14 +136,19 @@ export default {
   font-size: 250% !important;
   font-weight: bold;
   position: absolute;
-  top: 250px; left: 30px; width: 960px;
-
+  top: 250px;
+  left: 30px;
+  width: 960px;
 }
 .aide {
   border: none !important;
   position: absolute;
   top: 660px;
   left: 940px;
+}
+.boutonRetour {
+  width: 100% !important;
+  margin-top: 30% !important;
 }
 body::-webkit-scrollbar {
   display: none;

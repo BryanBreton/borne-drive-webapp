@@ -2,12 +2,9 @@
   <div class="about page d-flex align-center pa-4 mx-auto" style="height: 100%">
     <v-container>
       <div class="image">
-        <img :src="image.src" alt="">
+        <img :src="image.src" alt="" />
       </div>
-        <v-dialog
-        v-model="visible"
-        width="500"
-      >
+      <v-dialog v-model="visible" width="500">
         <v-card>
           <v-card-title class="headline grey lighten-2">
             Nous allons venir a votre aide
@@ -21,11 +18,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="visible = false"
-            >
+            <v-btn color="primary" text @click="visible = false">
               Ok
             </v-btn>
           </v-card-actions>
@@ -89,18 +82,14 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class=".col-md-6">
-
-        </v-col>
+        <v-col class=".col-md-6"> </v-col>
         <v-col class=".col-md-6">
           <v-row @click="help()">
-            <img src="../assets/aide.png" alt="aide">
+            <img src="../assets/aide.png" alt="aide" />
           </v-row>
           <v-row>
             Besoin d'aide
           </v-row>
-
-
         </v-col>
       </v-row>
       <div class="error">
@@ -121,22 +110,20 @@ export default {
       visible: false
     }
   },
-  created: {
-
-  },
+  created: {},
   mounted() {
-    console.log("yayayay");
+    console.log("yayayay")
     axios.get(processs.env.VUE_APP_PREFIXE_IMAGE + "/accueil.json").then(res => {
-      console.log(res.data[0]);
+      console.log(res.data[0])
       this.image = { src: process.env.VUE_APP_PREFIXE_IMAGE + res.data[0].src, delai: res.data[0].delai }
     })
-    const self = this;
+    const self = this
 
-    window.addEventListener('keyup', function(ev) {
-        console.log(typeof(ev.key));
-        ev.key === "Enter" ? self.valider() : self.clique(ev.key); // declared in your component methods
-    });
-},
+    window.addEventListener("keyup", function(ev) {
+      console.log(typeof ev.key)
+      ev.key === "Enter" ? self.valider() : self.clique(ev.key) // declared in your component methods
+    })
+  },
   methods: {
     clique(numero) {
       console.log(numero)
@@ -144,7 +131,7 @@ export default {
     },
     valider() {
       console.log("http://localhost:3001/commandes/" + this.numeroCarte + "/borne/1")
-      axios.get("http://localhost:3001/commandes/" + this.numeroCarte + "/borne/1").then((resp) => {
+      axios.get("http://localhost:3001/commandes/" + this.numeroCarte + "/borne/1").then(resp => {
         this.clientValider(resp.data)
       })
     },
@@ -159,31 +146,30 @@ export default {
     },
     help(id) {
       // axios.post()
-      console.log("appel api");
-      axios.get("http://localhost:3001/bornes/help/1").then(this.visible = true)
+      console.log("appel api")
+      axios.get("http://localhost:3001/bornes/help/1").then((this.visible = true))
     }
-  },
+  }
 }
 </script>
 <style>
 .page {
   background-color: #0077b2 !important;
 }
-.bouton{
+.bouton {
   width: 100% !important;
   font-size: 300% !important;
-
 }
-.numeroCarte{
+.numeroCarte {
   background-color: #fff !important;
   width: 20% !important;
-  height:30px;
+  height: 30px;
   font-size: 15px;
 }
-.help{
-  background-image: url('../assets/aide.png');
+.help {
+  background-image: url("../assets/aide.png");
 }
-.image{
+.image {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
